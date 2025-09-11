@@ -1,18 +1,81 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <title>Automator</title>
+  <meta charset="UTF-8" />
+  <title>AutomatorApp — автоматизація процесів на Android</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="description" content="AutomatorApp допомагає автоматизувати рутинні дії на Android. Інструкції, політика конфіденційності, умови використання та контакти." />
 </head>
 <body>
-  <h1>Мій Android додаток</h1>
-  <p>Автоматизація андроїд процесів</p>
-
-  <nav>
-    <a href="index.html">Головна</a> |
-    <a href="privacy.html">Privacy Policy</a> |
-    <a href="terms.html">Terms of Use</a> |
+  <nav class="nav">
+    <a href="index.html"><strong>AutomatorApp</strong></a>
+    <a href="instructions.html">Інструкції</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Use</a>
     <a href="contact.html">Контакти</a>
+    <a href="auth.html" class="btn" style="margin-left:auto">Реєстрація</a>
   </nav>
+
+  <header class="hero">
+    <div class="container">
+      <div>
+        <span class="badge">Android • Автоматизація</span>
+        <h1>AutomatorApp — менше рутини, більше дій</h1>
+        <p>Додаток, що допомагає <strong>автоматизувати процеси на Android</strong>:
+           натискання, запуски сценаріїв, обробку повідомлень, роботу з формами чи графічними елементами — за розкладом або за подією.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:10px">
+          <a class="btn" href="#download">Завантажити</a>
+          <a class="btn ghost" href="instructions.html">Переглянути інструкції</a>
+        </div>
+        <div id="download" style="margin-top:18px;color:#475569">Доступні варіанти: Google Play / пряме APK (посилання додай тут).</div>
+      </div>
+      <div>
+        <img class="screenshot" src="https://via.placeholder.com/960x600.png?text=Скріншоти+додатку" alt="Скріншот додатку">
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="grid cols-3">
+      <div class="card"><h3>Де корисний</h3>
+        <ul>
+          <li>Робочі сценарії: звіти, форми, робота з чатом.</li>
+          <li>Повторювані кліки/жести у застосунках.</li>
+          <li>Домашні задачі: таймери, нагадування, профілі.</li>
+        </ul>
+      </div>
+      <div class="card"><h3>Переваги</h3>
+        <ul>
+          <li>Прості сценарії без коду або з мінімумом коду.</li>
+          <li>Гнучкі тригери: час, кнопка, подія.</li>
+          <li>Швидкий старт за 5 хвилин.</li>
+        </ul>
+      </div>
+      <div class="card"><h3>Інтеграції</h3>
+        <ul>
+          <li>Вебхуки/сервер: <code>POST /api/run</code></li>
+          <li>Синхронізація через Firebase / власний сервер.</li>
+          <li>Експорт/імпорт конфігів.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section style="margin-top:24px" class="card">
+      <h3>Приклад інтеграції з сервером (fetch)</h3>
+      <pre>
+fetch("https://your-server.example.com/api/run", {
+  method: "POST",
+  headers: {"Content-Type":"application/json"},
+  body: JSON.stringify({ userId: "UID123", action: "start_scenario", scenario: "daily-report" })
+});</pre>
+      <p>Заміни адресу на свою (Vercel/Netlify Functions або будь-який бекенд).</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    © <span id="y"></span> AutomatorApp • <a href="privacy.html">Privacy</a> • <a href="terms.html">Terms</a>
+  </footer>
+  <script>document.getElementById('y').textContent=new Date().getFullYear()</script>
 </body>
 </html>
