@@ -2,17 +2,34 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
-  <title>Privacy Policy</title>
+  <title>Privacy Policy — AutomatorApp</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Privacy Policy</h1>
-  <p>Ця сторінка описує, як ми обробляємо дані користувачів додатку...</p>
-
-  <nav>
-    <a href="index.html">Головна</a> |
-    <a href="privacy.html">Privacy Policy</a> |
-    <a href="terms.html">Terms of Use</a> |
+  <nav class="nav">
+    <a href="index.html"><strong>AutomatorApp</strong></a>
+    <a href="instructions.html">Інструкції</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Use</a>
     <a href="contact.html">Контакти</a>
   </nav>
+
+  <main class="container">
+    <h1>Privacy Policy</h1>
+    <p>Ми не продаємо та не передаємо персональні дані третім сторонам. Додаток може обробляти дані,
+      необхідні для роботи сценаріїв (наприклад, технічні логи) — локально на пристрої або у вибраних вами інтеграціях
+      (Firebase/власний сервер). Ви можете вимкнути інтеграції у будь-який час.</p>
+    <h3>Збір даних</h3>
+    <ul>
+      <li>Опціонально: email для облікового запису (якщо ввімкнена реєстрація).</li>
+      <li>Технічні журнали помилок — для діагностики (локально/сервер за вашим вибором).</li>
+    </ul>
+    <h3>Контакти</h3>
+    <p>Запити щодо видалення даних: див. сторінку <a href="contact.html">Контакти</a>.</p>
+  </main>
+
+  <footer class="footer">© <span id="y"></span> AutomatorApp</footer>
+  <script>document.getElementById('y').textContent=new Date().getFullYear()</script>
 </body>
 </html>
