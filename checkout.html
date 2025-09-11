@@ -8,8 +8,6 @@
   <!-- Paddle v2 -->
   <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 
-  <!-- (опц.) CSP — тримай мінімально лояльною, або додай у <meta http-equiv> -->
-  <!-- Якщо раптом буде помилка завантаження скриптів Paddle, прибери/послаб CSP. -->
   <style>
     body { font-family: system-ui, Arial; margin: 0; padding: 24px; }
     .wrap { max-width: 560px; margin: 0 auto; }
@@ -29,28 +27,23 @@
   </div>
 
   <script>
-    // 1) Ініціалізація Paddle
-    // Sandbox: Paddle.Initialize({ token: "YOUR_PADDLE_CLIENT_TOKEN", environment: "sandbox" });
-    // Live:    Paddle.Initialize({ token: "YOUR_PADDLE_CLIENT_TOKEN" });
-    Paddle.Initialize({ token: "ctok_test_ea29f2ece976495030474795a7f", environment: "sandbox" });
+    // 1) Ініціалізація Paddle із sandbox client-side token
+    Paddle.Initialize({
+      token: "test_6fe6ea7c8f5cbdb97e73e3480ab",
+      environment: "sandbox"
+    });
 
     // 2) userId з query (?uid=...)
     const params = new URLSearchParams(location.search);
     const userId = params.get("uid") || "guest";
 
-    // 3) Відкрити Hosted Checkout
+    // 3) Відкрити Hosted Checkout із sandbox priceId
     const PRICE_ID = "pri_01k4tbx572v0wf1serterzxwnj";
     document.getElementById("buy").onclick = () => {
       document.getElementById("status").textContent = "Відкриваю чек-аут…";
       Paddle.Checkout.open({
         items: [{ priceId: PRICE_ID, quantity: 1 }],
         customer: { customData: { user_id: userId } },
-
-        // (опц.) Повернення у застосунок (deep link):
-        // returnUrl: "myapp://after-purchase",
-        // (опц.) Успішна сторінка:
-        // successUrl: "https://b0b999.github.io/automatorapp-site/success.html",
-
         closeCallback: () => {
           document.getElementById("status").textContent = "Вікно закрито. Спробуй ще.";
         }
