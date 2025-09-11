@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Інструкції — AutomatorApp</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="nav">
+    <a href="index.html"><strong>AutomatorApp</strong></a>
+    <a href="instructions.html">Інструкції</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Use</a>
+    <a href="contact.html">Контакти</a>
+    <a href="auth.html" class="btn" style="margin-left:auto">Реєстрація</a>
+  </nav>
+
+  <main class="container">
+    <h1>Інструкції</h1>
+
+    <section class="card">
+      <h2>1) Швидкий старт (5 хв)</h2>
+      <ol>
+        <li>Встанови додаток і дай необхідні дозволи (Accessibility / Overlay якщо потрібно).</li>
+        <li>Відкрий «Сценарії» → «Новий сценарій» → вибери тригер: <em>Кнопка</em> або <em>За розкладом</em>.</li>
+        <li>Додай дію: «Натиснути елемент», «Надіслати текст», «Затримка».</li>
+        <li>Збережи → натисни «Старт». Перевір, що сценарій працює.</li>
+      </ol>
+      <p><strong>Порада:</strong> почни з одного простого кроку та додай інші по мірі потреби.</p>
+    </section>
+
+    <section class="card">
+      <h2>2) Інтеграція через вебхук</h2>
+      <ol>
+        <li>У налаштуваннях додатку увімкни «Вебхуки».</li>
+        <li>Створи endpoint на сервері або у Vercel Functions (наприклад <code>/api/trigger</code>).</li>
+        <li>Укажи URL у полі «Webhook URL» в додатку.</li>
+        <li>Надішли запит:
+<pre>
+POST https://your-domain/api/trigger
+Content-Type: application/json
+
+{ "userId": "UID123", "scenario": "open-form" }
+</pre></li>
+        <li>Прив’яжи в додатку дію «Запуск сценарію при вебхуку».</li>
+      </ol>
+      <p>Так можна запускати сценарії дистанційно з вашого сервера/бота.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    © <span id="y"></span> AutomatorApp
+  </footer>
+  <script>document.getElementById('y').textContent=new Date().getFullYear()</script>
+</body>
+</html>
