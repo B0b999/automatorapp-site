@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Checkout</title>
+  <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+</head>
+<body>
+  <h1>Оплата</h1>
+  <button id="buy">Купити 30 днів</button>
+
+  <script>
+    // Ініціалізація Paddle — вставляєш свій client token з Dashboard
+    Paddle.Initialize({ token: "YOUR_PADDLE_CLIENT_TOKEN" });
+
+    // Беремо userId з query (наприклад, ?uid=123)
+    const params = new URLSearchParams(location.search);
+    const userId = params.get("uid") || "guest";
+
+    // Кнопка "Купити"
+    document.getElementById("buy").onclick = () => {
+      Paddle.Checkout.open({
+        items: [{ priceId: "pri_01k4tddwahcwkfkqyxn72pmqe0", quantity: 1 }],
+        customer: { customData: { user_id: userId } }
+      });
+    };
+  </script>
+</body>
+</html>
