@@ -27,7 +27,7 @@
   </div>
 
   <script>
-    // 1) Ініціалізація Paddle із sandbox client-side token
+    // 1) Ініціалізація Paddle (sandbox визначається токеном test_…)
     Paddle.Initialize({
       token: "test_6fe6ea7c8f5cbdb97e73e3480ab"
     });
@@ -38,6 +38,7 @@
 
     // 3) Відкрити Hosted Checkout із sandbox priceId
     const PRICE_ID = "pri_01k4tbx572v0wf1serterzxwnj";
+
     document.getElementById("buy").onclick = () => {
       document.getElementById("status").textContent = "Відкриваю чек-аут…";
       Paddle.Checkout.open({
