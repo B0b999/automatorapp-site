@@ -3,37 +3,43 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Оплата 7 днів</title>
+  <title>Оплата ліцензії</title>
 
   <!-- Paddle v2 -->
   <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 
   <style>
-    body { font-family: system-ui, Arial; margin: 0; padding: 24px; background: #fafafa; }
-    .wrap { max-width: 560px; margin: 0 auto; }
-    .card { background: #fff; border: 1px solid #ddd; border-radius: 12px; padding: 20px; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
-    h1 { font-size: 20px; margin-bottom: 16px; }
-    button { padding: 12px 18px; border: 0; border-radius: 8px; cursor: pointer; background: #0070f3; color: #fff; font-size: 16px; }
-    button:hover { background: #0059c1; }
-    small { color: #666; }
+    body { font-family: system-ui, Arial; margin: 0; padding: 24px; background:#fafafa;}
+    .wrap { max-width: 640px; margin: 0 auto; }
+    .card { background:#fff; border:1px solid #ddd; border-radius:12px; padding:20px; box-shadow:0 2px 6px rgba(0,0,0,.08); }
+    h1 { margin: 0 0 12px; }
+    .row { display:flex; gap:12px; flex-wrap:wrap; }
+    button { padding: 12px 18px; border:0; border-radius:10px; cursor:pointer; font-size:16px; }
+    .btn { background:#0a7; color:#fff; }
+    .btn.secondary { background:#0070f3; }
+    small { color:#666; }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <h1>Оформлення ліцензії (7 днів)</h1>
+    <h1>Оформлення ліцензії</h1>
     <div class="card">
-      <p id="status">Натисни, щоб перейти на оплату.</p>
-      <button id="buy">Купити за $0.50</button>
+      <p id="status">Оберіть варіант:</p>
+      <div class="row">
+        <button id="buy7"  class="btn">7 днів — $0.50</button>
+        <button id="buy30" class="btn secondary">30 днів — $3.00</button>
+      </div>
       <p><small>Після оплати додаток автоматично отримає ліцензію.</small></p>
     </div>
   </div>
 
   <script>
-    // Client-side token (sandbox)
+    // === Sandbox client-side token ===
     const TOKEN = "test_3b243e0bd79be29266988ce185b";
 
-    // Price ID (7 days license)
-    const PRICE_ID = "pri_01k4zc36qa4yq737zvd6mhcahk";
+    // === Price IDs ===
+    const PRICE_ID_7   = "pri_01k4zg62zm7gqksfq8t1zh916h";
+    const PRICE_ID_30  = "pri_01k4zgdgwjr00wjjzrb4bk2xd8";
 
     // userId з query (?uid=...)
     const params = new URLSearchParams(location.search);
@@ -44,11 +50,11 @@
 
     const isMobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
 
-    document.getElementById("buy").onclick = () => {
+    function openCheckout(priceId) {
       document.getElementById("status").textContent = "Відкриваємо оплату…";
 
       const checkoutOpts = {
-        items: [{ priceId: PRICE_ID, quantity: 1 }],
+        items: [{ priceId, quantity: 1 }],
         customer: { customData: { user_id: userId } }
       };
 
@@ -62,7 +68,10 @@
           }
         });
       }
-    };
+    }
+
+    document.getElementById("buy7").onclick  = () => openCheckout(PRICE_ID_7);
+    document.getElementById("buy30").onclick = () => openCheckout(PRICE_ID_30);
   </script>
 </body>
 </html>
