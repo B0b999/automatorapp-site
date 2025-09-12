@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Оплата 30 днів</title>
+  <title>Оплата 7 днів</title>
   <style>
     body { font-family: system-ui, Arial; margin: 0; padding: 24px; background: #fafafa; }
     .wrap { max-width: 560px; margin: 0 auto; }
@@ -16,17 +16,17 @@
 </head>
 <body>
   <div class="wrap">
-    <h1>Оформлення ліцензії (30 днів)</h1>
+    <h1>Оформлення ліцензії (7 днів)</h1>
     <div class="card">
       <p id="status">Натисни, щоб перейти на оплату.</p>
-      <button id="buy">Купити за $1.00</button>
+      <button id="buy">Купити за $0.50</button>
       <p><small>Після оплати додаток автоматично отримає ліцензію.</small></p>
     </div>
   </div>
 
   <script>
-    // Hosted Checkout URL із Sandbox
-    const CHECKOUT_URL = "https://sandbox-pay.paddle.io/hsc_01k4xfd57yw0gtrng055343zcx_nqssasap169sqbzc0fd5scenxzpkka5d";
+    // Hosted Checkout URL для 7 days (створиш у Dashboard → Hosted Checkouts)
+    const CHECKOUT_URL = "https://sandbox-pay.paddle.io/hsc_xxxxxxxxxxxxxxxxx"; 
 
     // userId з query (?uid=...)
     const params = new URLSearchParams(location.search);
@@ -34,7 +34,6 @@
 
     document.getElementById("buy").onclick = () => {
       document.getElementById("status").textContent = "Перехід на сторінку оплати…";
-      // Формуємо URL із customData
       const url = CHECKOUT_URL + "?customer[custom_data][user_id]=" + encodeURIComponent(userId);
       window.location.href = url;
     };
