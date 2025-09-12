@@ -4,6 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Оплата 7 днів</title>
+
+  <!-- Paddle v2 -->
+  <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+
   <style>
     body { font-family: system-ui, Arial; margin: 0; padding: 24px; background: #fafafa; }
     .wrap { max-width: 560px; margin: 0 auto; }
@@ -25,17 +29,39 @@
   </div>
 
   <script>
-    // Hosted Checkout URL для 7 days (створиш у Dashboard → Hosted Checkouts)
-    const CHECKOUT_URL = "https://sandbox-pay.paddle.io/hsc_xxxxxxxxxxxxxxxxx"; 
+    // Client-side token (sandbox)
+    const TOKEN = "test_3b243e0bd79be29266988ce185b";
+
+    // Price ID (7 days license)
+    const PRICE_ID = "pri_01k4zc36qa4yq737zvd6mhcahk";
 
     // userId з query (?uid=...)
     const params = new URLSearchParams(location.search);
     const userId = params.get("uid") || "guest";
 
+    // Ініціалізація Paddle
+    Paddle.Initialize({ token: TOKEN });
+
+    const isMobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
+
     document.getElementById("buy").onclick = () => {
-      document.getElementById("status").textContent = "Перехід на сторінку оплати…";
-      const url = CHECKOUT_URL + "?customer[custom_data][user_id]=" + encodeURIComponent(userId);
-      window.location.href = url;
+      document.getElementById("status").textContent = "Відкриваємо оплату…";
+
+      const checkoutOpts = {
+        items: [{ priceId: PRICE_ID, quantity: 1 }],
+        customer: { customData: { user_id: userId } }
+      };
+
+      if (isMobile) {
+        Paddle.Checkout.openUrl(checkoutOpts); // редирект на мобільних
+      } else {
+        Paddle.Checkout.open({
+          ...checkoutOpts,
+          closeCallback: () => {
+            document.getElementById("status").textContent = "Вікно закрито. Спробуй ще.";
+          }
+        });
+      }
     };
   </script>
 </body>
