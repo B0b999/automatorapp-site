@@ -7,32 +7,30 @@
   <style>
     body { font-family: system-ui, Arial; margin: 0; padding: 24px; background: #fafafa; }
     .wrap { max-width: 640px; margin: 0 auto; }
-    .card { background: #fff; border: 1px solid #ddd; border-radius: 12px; padding: 20px; box-shadow: 0 2px 6px rgba(0,0,0,.08); }
-    button { padding: 12px 18px; border: 0; border-radius: 10px; cursor: pointer; font-size: 16px; background: #0070f3; color: #fff; }
-    small { color: #666; }
+    .card { background: #fff; border: 1px solid #ddd; border-radius: 12px; padding: 20px; box-shadow: 0 2px 6px rgba(0,0,0,.08); text-align: center; }
+    h1 { margin-bottom: 16px; }
+    a.buy-btn {
+      display: inline-block;
+      padding: 12px 20px;
+      border-radius: 8px;
+      background: #0070f3;
+      color: #fff;
+      text-decoration: none;
+      font-size: 16px;
+    }
+    a.buy-btn:hover { background: #0059c1; }
+    small { color: #666; display: block; margin-top: 12px; }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <h1>Оформлення ліцензії (30 днів)</h1>
     <div class="card">
-      <p id="status">Натисни кнопку, щоб оплатити.</p>
-      <button id="buy30">Купити за $3.00</button>
-      <p><small>Після оплати додаток автоматично отримає ліцензію.</small></p>
+      <h1>Оформлення ліцензії (30 днів)</h1>
+      <a class="buy-btn" href="https://sandbox-pay.paddle.io/hsc_01k4zj77sf9dwgdrpxj93nytws_y6qjp0e41q4p3nct566anygb8zxywce3">
+        Купити за $3.00
+      </a>
+      <small>Після оплати додаток автоматично отримає ліцензію.</small>
     </div>
   </div>
-
-  <script>
-    const checkoutUrl = "https://sandbox-pay.paddle.io/hsc_01k4zj77sf9dwgdrpxj93nytws_y6qjp0e41q4p3nct566anygb8zxywce3";
-
-    // userId можна додати через ?uid= у URL
-    const params = new URLSearchParams(location.search);
-    const userId = params.get("uid") || "guest";
-
-    document.getElementById("buy30").onclick = () => {
-      document.getElementById("status").textContent = "Відкриваємо оплату…";
-      window.location.href = checkoutUrl + "?customer[custom_data][user_id]=" + encodeURIComponent(userId);
-    };
-  </script>
 </body>
 </html>
