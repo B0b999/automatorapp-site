@@ -3,75 +3,36 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Оплата ліцензії</title>
-
-  <!-- Paddle v2 -->
-  <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
-
+  <title>Оплата 30 днів</title>
   <style>
-    body { font-family: system-ui, Arial; margin: 0; padding: 24px; background:#fafafa;}
+    body { font-family: system-ui, Arial; margin: 0; padding: 24px; background: #fafafa; }
     .wrap { max-width: 640px; margin: 0 auto; }
-    .card { background:#fff; border:1px solid #ddd; border-radius:12px; padding:20px; box-shadow:0 2px 6px rgba(0,0,0,.08); }
-    h1 { margin: 0 0 12px; }
-    .row { display:flex; gap:12px; flex-wrap:wrap; }
-    button { padding: 12px 18px; border:0; border-radius:10px; cursor:pointer; font-size:16px; }
-    .btn { background:#0a7; color:#fff; }
-    .btn.secondary { background:#0070f3; }
-    small { color:#666; }
+    .card { background: #fff; border: 1px solid #ddd; border-radius: 12px; padding: 20px; box-shadow: 0 2px 6px rgba(0,0,0,.08); }
+    button { padding: 12px 18px; border: 0; border-radius: 10px; cursor: pointer; font-size: 16px; background: #0070f3; color: #fff; }
+    small { color: #666; }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <h1>Оформлення ліцензії</h1>
+    <h1>Оформлення ліцензії (30 днів)</h1>
     <div class="card">
-      <p id="status">Оберіть варіант:</p>
-      <div class="row">
-        <button id="buy7"  class="btn">7 днів — $0.50</button>
-        <button id="buy30" class="btn secondary">30 днів — $3.00</button>
-      </div>
+      <p id="status">Натисни кнопку, щоб оплатити.</p>
+      <button id="buy30">Купити за $3.00</button>
       <p><small>Після оплати додаток автоматично отримає ліцензію.</small></p>
     </div>
   </div>
 
   <script>
-    // === Sandbox client-side token ===
-    const TOKEN = "test_3b243e0bd79be29266988ce185b";
+    const checkoutUrl = "https://sandbox-pay.paddle.io/hsc_01k4zj77sf9dwgdrpxj93nytws_y6qjp0e41q4p3nct566anygb8zxywce3";
 
-    // === Price IDs ===
-    const PRICE_ID_7   = "pri_01k4zg62zm7gqksfq8t1zh916h";
-    const PRICE_ID_30  = "pri_01k4zgdgwjr00wjjzrb4bk2xd8";
-
-    // userId з query (?uid=...)
+    // userId можна додати через ?uid= у URL
     const params = new URLSearchParams(location.search);
     const userId = params.get("uid") || "guest";
 
-    // Ініціалізація Paddle
-    Paddle.Initialize({ token: TOKEN });
-
-    const isMobile = /Android|iPhone|iPad/i.test(navigator.userAgent);
-
-    function openCheckout(priceId) {
+    document.getElementById("buy30").onclick = () => {
       document.getElementById("status").textContent = "Відкриваємо оплату…";
-
-      const checkoutOpts = {
-        items: [{ priceId, quantity: 1 }],
-        customer: { customData: { user_id: userId } }
-      };
-
-      if (isMobile) {
-        Paddle.Checkout.openUrl(checkoutOpts); // редирект на мобільних
-      } else {
-        Paddle.Checkout.open({
-          ...checkoutOpts,
-          closeCallback: () => {
-            document.getElementById("status").textContent = "Вікно закрито. Спробуй ще.";
-          }
-        });
-      }
-    }
-
-    document.getElementById("buy7").onclick  = () => openCheckout(PRICE_ID_7);
-    document.getElementById("buy30").onclick = () => openCheckout(PRICE_ID_30);
+      window.location.href = checkoutUrl + "?customer[custom_data][user_id]=" + encodeURIComponent(userId);
+    };
   </script>
 </body>
 </html>
