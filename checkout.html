@@ -2,11 +2,72 @@
 <html lang="uk">
 <head>
   <meta charset="utf-8">
-  <title>Оплата успішна</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Оплата / Підписка</title>
+  <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+  <style>
+    body{font-family:system-ui,Arial;margin:0;padding:24px;background:#fafafa}
+    .wrap{max-width:640px;margin:0 auto}
+    .card{background:#fff;border:1px solid #ddd;border-radius:12px;padding:20px;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+    h1{margin:0 0 16px}
+    button{padding:12px 18px;border:0;border-radius:10px;cursor:pointer;font-size:16px;background:#0070f3;color:#fff}
+    small{color:#666}
+    #status{margin:12px 0}
+  </style>
 </head>
 <body>
-  <h1>✅ Оплата успішна</h1>
-  <p>Дякуємо! Ваша ліцензія на 30 днів активована.</p>
-  <a href="index.html">Повернутися на головну</a>
+  <div class="wrap">
+    <div class="card">
+      <h1>Оформлення доступу</h1>
+      <p id="status">Готово до оплати.</p>
+      <button id="buy">Купити / Підписатися</button>
+      <p><small>Оплата виконується у sandbox. Після успіху ви повернетесь на сторінку підтвердження.</small></p>
+    </div>
+  </div>
+
+  <script>
+    // 1) Sandbox token (твій)
+    Paddle.Initialize({ token: "test_6c2fc542afc9b0a0f277fe5d13d" });
+
+    // 2) Ідентифікатори
+    // Якщо маєш priceId (pri_...), ВСТАВ ЙОГО СЮДИ — це найкращий варіант:
+    const PRICE_ID = ""; // приклад: "pri_01xxxxxxxxxxxxxxxxxxxx"
+    // Твій productId (працює, якщо для продукту є дефолтна ціна):
+    const PRODUCT_ID = "pro_01k51y9n9szjwkr8vme0p5e13s";
+
+    // 3) userId з ?uid=... або guest
+    const params = new URLSearchParams(location.search);
+    const userId = params.get("uid") || "guest";
+
+    // 4) Опції Checkout
+    function buildItems(){
+      if (PRICE_ID && PRICE_ID.startsWith("pri_")) {
+        return [{ priceId: PRICE_ID, quantity: 1 }];
+      }
+      // fallback через productId (спрацює, якщо у продукту є активна ціна)
+      return [{ productId: PRODUCT_ID, quantity: 1 }];
+    }
+
+    const checkoutOpts = {
+      items: buildItems(),
+      customer: { customData: { user_id: userId } },
+      successUrl: "https://b0b999.github.io/automatorapp-site/success.html"
+      // returnUrl: "myapp://after-purchase" // якщо треба повернути у застосунок
+    };
+
+    const statusEl = document.getElementById("status");
+    document.getElementById("buy").onclick = () => {
+      statusEl.textContent = "Відкриваємо оплату…";
+      try {
+        // На мобільних краще повноекранний перехід
+        Paddle.Checkout.openUrl(checkoutOpts);
+      } catch (e) {
+        statusEl.textContent = "Не вдалося відкрити оплату. Перевірте PRICE_ID/PRODUCT_ID.";
+        console.error(e);
+      }
+    };
+  </script>
 </body>
 </html>
+
+
