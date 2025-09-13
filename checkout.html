@@ -20,24 +20,23 @@
     <div class="card">
       <h1>Оформлення доступу</h1>
       <p id="status">Готово до оплати.</p>
-      <button id="buy">Купити / Підписатися</button>
+      <button id="buy">Купити підписку ($5/місяць)</button>
       <p><small>Оплата виконується у sandbox. Після успіху ви повернетесь на сторінку підтвердження.</small></p>
     </div>
   </div>
 
   <script>
     // 1) Sandbox token
-    Paddle.Initialize({ token: "test_6c2fc542afc9b0a0f277fe5d13d" });
+    Paddle.Initialize({ token: "test_30c22b6e74f10e19a3b3a5be385" });
 
-    // 2) Дані продукту
-    const PRICE_ID = "pri_01k51yvrh7qpqrr1r7wxdvqkrp"; 
-    const PRODUCT_ID = "pro_01k51y9n9szjwkr8vme0p5e13s";
+    // 2) Твій PriceId (місячна підписка з trial)
+    const PRICE_ID = "pri_01k51yvrh7qpqrr1r7wxdvqkrp";
 
-    // 3) userId з ?uid=... або guest
+    // 3) userId з URL або fallback
     const params = new URLSearchParams(location.search);
     const userId = params.get("uid") || "guest";
 
-    // 4) Опції Checkout
+    // 4) Налаштування Checkout
     const checkoutOpts = {
       items: [{ priceId: PRICE_ID, quantity: 1 }],
       customer: { customData: { user_id: userId } },
