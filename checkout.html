@@ -26,13 +26,11 @@
   </div>
 
   <script>
-    // 1) Sandbox token (твій)
+    // 1) Sandbox token
     Paddle.Initialize({ token: "test_6c2fc542afc9b0a0f277fe5d13d" });
 
-    // 2) Ідентифікатори
-    // Якщо маєш priceId (pri_...), ВСТАВ ЙОГО СЮДИ — це найкращий варіант:
-    const PRICE_ID = "pri_01k51yvrh7qpqrr1r7wxdvqkrp"; // приклад: "pri_01xxxxxxxxxxxxxxxxxxxx"
-    // Твій productId (працює, якщо для продукту є дефолтна ціна):
+    // 2) Дані продукту
+    const PRICE_ID = "pri_01k51yvrh7qpqrr1r7wxdvqkrp"; 
     const PRODUCT_ID = "pro_01k51y9n9szjwkr8vme0p5e13s";
 
     // 3) userId з ?uid=... або guest
@@ -40,29 +38,19 @@
     const userId = params.get("uid") || "guest";
 
     // 4) Опції Checkout
-    function buildItems(){
-      if (PRICE_ID && PRICE_ID.startsWith("pri_")) {
-        return [{ priceId: PRICE_ID, quantity: 1 }];
-      }
-      // fallback через productId (спрацює, якщо у продукту є активна ціна)
-      return [{ productId: PRODUCT_ID, quantity: 1 }];
-    }
-
     const checkoutOpts = {
-      items: buildItems(),
+      items: [{ priceId: PRICE_ID, quantity: 1 }],
       customer: { customData: { user_id: userId } },
       successUrl: "https://b0b999.github.io/automatorapp-site/success.html"
-      // returnUrl: "myapp://after-purchase" // якщо треба повернути у застосунок
     };
 
     const statusEl = document.getElementById("status");
     document.getElementById("buy").onclick = () => {
       statusEl.textContent = "Відкриваємо оплату…";
       try {
-        // На мобільних краще повноекранний перехід
-        Paddle.Checkout.openUrl(checkoutOpts);
+        Paddle.Checkout.open(checkoutOpts);
       } catch (e) {
-        statusEl.textContent = "Не вдалося відкрити оплату. Перевірте PRICE_ID/PRODUCT_ID.";
+        statusEl.textContent = "Не вдалося відкрити оплату. Перевірте PRICE_ID.";
         console.error(e);
       }
     };
